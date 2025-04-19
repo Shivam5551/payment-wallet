@@ -1,0 +1,23 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "eslint": "^9.24.0",
+    "prisma": "^6.6.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "@prisma/client": "6.6.0",
+    "dotenv": "^16.5.0"
+  },
+  "exports": {
+    "./client": "./src/index.ts"
+  }
+}
