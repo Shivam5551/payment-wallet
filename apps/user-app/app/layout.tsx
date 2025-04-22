@@ -25,10 +25,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} bg-neutral-200 ${geistMono.variable}`}>
         <ToastContainer />
         <Providers>
-          {children}
+        {children}
         </Providers>
       </body>
     </html>
