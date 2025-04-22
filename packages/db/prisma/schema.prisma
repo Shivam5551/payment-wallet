@@ -36,7 +36,7 @@ model Balance{
 
 model onRampTransactions{
   id Int @id @default(autoincrement())
-  status onRampStatus
+  status onRampStatus @default(Pending)
   token String @unique
   provider String
   amount Int
@@ -44,6 +44,7 @@ model onRampTransactions{
   userId String @unique
   user User @relation(fields: [userId], references: [id])
 }
+
 enum AuthType {
   Email
   Google

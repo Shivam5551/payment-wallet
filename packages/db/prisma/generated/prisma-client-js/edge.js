@@ -157,7 +157,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/shivam/Documents/web/paytm-wallet/packages/db/prisma/generated/prisma-client-js",
+      "value": "/home/shivam/Documents/web/payment-wallet/packages/db/prisma/generated/prisma-client-js",
       "fromEnvVar": null
     },
     "config": {
@@ -171,7 +171,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/shivam/Documents/web/paytm-wallet/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/home/shivam/Documents/web/payment-wallet/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
