@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model P2PTransferHistory
+ * 
+ */
+export type P2PTransferHistory = $Result.DefaultSelection<Prisma.$P2PTransferHistoryPayload>
+/**
  * Model Balance
  * 
  */
@@ -194,6 +199,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.p2PTransferHistory`: Exposes CRUD operations for the **P2PTransferHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more P2PTransferHistories
+    * const p2PTransferHistories = await prisma.p2PTransferHistory.findMany()
+    * ```
+    */
+  get p2PTransferHistory(): Prisma.P2PTransferHistoryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.balance`: Exposes CRUD operations for the **Balance** model.
@@ -655,6 +670,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    P2PTransferHistory: 'P2PTransferHistory',
     Balance: 'Balance',
     onRampTransactions: 'onRampTransactions'
   };
@@ -675,7 +691,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "balance" | "onRampTransactions"
+      modelProps: "user" | "p2PTransferHistory" | "balance" | "onRampTransactions"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -750,6 +766,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      P2PTransferHistory: {
+        payload: Prisma.$P2PTransferHistoryPayload<ExtArgs>
+        fields: Prisma.P2PTransferHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.P2PTransferHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.P2PTransferHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.P2PTransferHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.P2PTransferHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.P2PTransferHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.P2PTransferHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.P2PTransferHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.P2PTransferHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.P2PTransferHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>
+          }
+          update: {
+            args: Prisma.P2PTransferHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.P2PTransferHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.P2PTransferHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.P2PTransferHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.P2PTransferHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$P2PTransferHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.P2PTransferHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateP2PTransferHistory>
+          }
+          groupBy: {
+            args: Prisma.P2PTransferHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<P2PTransferHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.P2PTransferHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<P2PTransferHistoryCountAggregateOutputType> | number
           }
         }
       }
@@ -986,6 +1076,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    p2PTransferHistory?: P2PTransferHistoryOmit
     balance?: BalanceOmit
     onRampTransactions?: onRampTransactionsOmit
   }
@@ -1084,11 +1175,15 @@ export namespace Prisma {
   export type UserCountOutputType = {
     onramptransactions: number
     balance: number
+    sender: number
+    receiver: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     onramptransactions?: boolean | UserCountOutputTypeCountOnramptransactionsArgs
     balance?: boolean | UserCountOutputTypeCountBalanceArgs
+    sender?: boolean | UserCountOutputTypeCountSenderArgs
+    receiver?: boolean | UserCountOutputTypeCountReceiverArgs
   }
 
   // Custom InputTypes
@@ -1114,6 +1209,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountBalanceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BalanceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSenderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: P2PTransferHistoryWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReceiverArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: P2PTransferHistoryWhereInput
   }
 
 
@@ -1295,6 +1404,8 @@ export namespace Prisma {
     phoneno?: boolean
     onramptransactions?: boolean | User$onramptransactionsArgs<ExtArgs>
     balance?: boolean | User$balanceArgs<ExtArgs>
+    sender?: boolean | User$senderArgs<ExtArgs>
+    receiver?: boolean | User$receiverArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1329,6 +1440,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     onramptransactions?: boolean | User$onramptransactionsArgs<ExtArgs>
     balance?: boolean | User$balanceArgs<ExtArgs>
+    sender?: boolean | User$senderArgs<ExtArgs>
+    receiver?: boolean | User$receiverArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1339,6 +1452,8 @@ export namespace Prisma {
     objects: {
       onramptransactions: Prisma.$onRampTransactionsPayload<ExtArgs>[]
       balance: Prisma.$BalancePayload<ExtArgs>[]
+      sender: Prisma.$P2PTransferHistoryPayload<ExtArgs>[]
+      receiver: Prisma.$P2PTransferHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1743,6 +1858,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     onramptransactions<T extends User$onramptransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$onramptransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$onRampTransactionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     balance<T extends User$balanceArgs<ExtArgs> = {}>(args?: Subset<T, User$balanceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sender<T extends User$senderArgs<ExtArgs> = {}>(args?: Subset<T, User$senderArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receiver<T extends User$receiverArgs<ExtArgs> = {}>(args?: Subset<T, User$receiverArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2214,6 +2331,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.sender
+   */
+  export type User$senderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    where?: P2PTransferHistoryWhereInput
+    orderBy?: P2PTransferHistoryOrderByWithRelationInput | P2PTransferHistoryOrderByWithRelationInput[]
+    cursor?: P2PTransferHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: P2PTransferHistoryScalarFieldEnum | P2PTransferHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * User.receiver
+   */
+  export type User$receiverArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    where?: P2PTransferHistoryWhereInput
+    orderBy?: P2PTransferHistoryOrderByWithRelationInput | P2PTransferHistoryOrderByWithRelationInput[]
+    cursor?: P2PTransferHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: P2PTransferHistoryScalarFieldEnum | P2PTransferHistoryScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2229,6 +2394,1072 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model P2PTransferHistory
+   */
+
+  export type AggregateP2PTransferHistory = {
+    _count: P2PTransferHistoryCountAggregateOutputType | null
+    _min: P2PTransferHistoryMinAggregateOutputType | null
+    _max: P2PTransferHistoryMaxAggregateOutputType | null
+  }
+
+  export type P2PTransferHistoryMinAggregateOutputType = {
+    id: string | null
+    receiverID: string | null
+    receiverName: string | null
+    senderID: string | null
+    senderName: string | null
+  }
+
+  export type P2PTransferHistoryMaxAggregateOutputType = {
+    id: string | null
+    receiverID: string | null
+    receiverName: string | null
+    senderID: string | null
+    senderName: string | null
+  }
+
+  export type P2PTransferHistoryCountAggregateOutputType = {
+    id: number
+    receiverID: number
+    receiverName: number
+    senderID: number
+    senderName: number
+    _all: number
+  }
+
+
+  export type P2PTransferHistoryMinAggregateInputType = {
+    id?: true
+    receiverID?: true
+    receiverName?: true
+    senderID?: true
+    senderName?: true
+  }
+
+  export type P2PTransferHistoryMaxAggregateInputType = {
+    id?: true
+    receiverID?: true
+    receiverName?: true
+    senderID?: true
+    senderName?: true
+  }
+
+  export type P2PTransferHistoryCountAggregateInputType = {
+    id?: true
+    receiverID?: true
+    receiverName?: true
+    senderID?: true
+    senderName?: true
+    _all?: true
+  }
+
+  export type P2PTransferHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which P2PTransferHistory to aggregate.
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of P2PTransferHistories to fetch.
+     */
+    orderBy?: P2PTransferHistoryOrderByWithRelationInput | P2PTransferHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: P2PTransferHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` P2PTransferHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` P2PTransferHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned P2PTransferHistories
+    **/
+    _count?: true | P2PTransferHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: P2PTransferHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: P2PTransferHistoryMaxAggregateInputType
+  }
+
+  export type GetP2PTransferHistoryAggregateType<T extends P2PTransferHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateP2PTransferHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateP2PTransferHistory[P]>
+      : GetScalarType<T[P], AggregateP2PTransferHistory[P]>
+  }
+
+
+
+
+  export type P2PTransferHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: P2PTransferHistoryWhereInput
+    orderBy?: P2PTransferHistoryOrderByWithAggregationInput | P2PTransferHistoryOrderByWithAggregationInput[]
+    by: P2PTransferHistoryScalarFieldEnum[] | P2PTransferHistoryScalarFieldEnum
+    having?: P2PTransferHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: P2PTransferHistoryCountAggregateInputType | true
+    _min?: P2PTransferHistoryMinAggregateInputType
+    _max?: P2PTransferHistoryMaxAggregateInputType
+  }
+
+  export type P2PTransferHistoryGroupByOutputType = {
+    id: string
+    receiverID: string
+    receiverName: string
+    senderID: string
+    senderName: string
+    _count: P2PTransferHistoryCountAggregateOutputType | null
+    _min: P2PTransferHistoryMinAggregateOutputType | null
+    _max: P2PTransferHistoryMaxAggregateOutputType | null
+  }
+
+  type GetP2PTransferHistoryGroupByPayload<T extends P2PTransferHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<P2PTransferHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof P2PTransferHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], P2PTransferHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], P2PTransferHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type P2PTransferHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receiverID?: boolean
+    receiverName?: boolean
+    senderID?: boolean
+    senderName?: boolean
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["p2PTransferHistory"]>
+
+  export type P2PTransferHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receiverID?: boolean
+    receiverName?: boolean
+    senderID?: boolean
+    senderName?: boolean
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["p2PTransferHistory"]>
+
+  export type P2PTransferHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receiverID?: boolean
+    receiverName?: boolean
+    senderID?: boolean
+    senderName?: boolean
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["p2PTransferHistory"]>
+
+  export type P2PTransferHistorySelectScalar = {
+    id?: boolean
+    receiverID?: boolean
+    receiverName?: boolean
+    senderID?: boolean
+    senderName?: boolean
+  }
+
+  export type P2PTransferHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "receiverID" | "receiverName" | "senderID" | "senderName", ExtArgs["result"]["p2PTransferHistory"]>
+  export type P2PTransferHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type P2PTransferHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type P2PTransferHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    receiver?: boolean | UserDefaultArgs<ExtArgs>
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $P2PTransferHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "P2PTransferHistory"
+    objects: {
+      receiver: Prisma.$UserPayload<ExtArgs>
+      sender: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      receiverID: string
+      receiverName: string
+      senderID: string
+      senderName: string
+    }, ExtArgs["result"]["p2PTransferHistory"]>
+    composites: {}
+  }
+
+  type P2PTransferHistoryGetPayload<S extends boolean | null | undefined | P2PTransferHistoryDefaultArgs> = $Result.GetResult<Prisma.$P2PTransferHistoryPayload, S>
+
+  type P2PTransferHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<P2PTransferHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: P2PTransferHistoryCountAggregateInputType | true
+    }
+
+  export interface P2PTransferHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['P2PTransferHistory'], meta: { name: 'P2PTransferHistory' } }
+    /**
+     * Find zero or one P2PTransferHistory that matches the filter.
+     * @param {P2PTransferHistoryFindUniqueArgs} args - Arguments to find a P2PTransferHistory
+     * @example
+     * // Get one P2PTransferHistory
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends P2PTransferHistoryFindUniqueArgs>(args: SelectSubset<T, P2PTransferHistoryFindUniqueArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one P2PTransferHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {P2PTransferHistoryFindUniqueOrThrowArgs} args - Arguments to find a P2PTransferHistory
+     * @example
+     * // Get one P2PTransferHistory
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends P2PTransferHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, P2PTransferHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first P2PTransferHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryFindFirstArgs} args - Arguments to find a P2PTransferHistory
+     * @example
+     * // Get one P2PTransferHistory
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends P2PTransferHistoryFindFirstArgs>(args?: SelectSubset<T, P2PTransferHistoryFindFirstArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first P2PTransferHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryFindFirstOrThrowArgs} args - Arguments to find a P2PTransferHistory
+     * @example
+     * // Get one P2PTransferHistory
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends P2PTransferHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, P2PTransferHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more P2PTransferHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all P2PTransferHistories
+     * const p2PTransferHistories = await prisma.p2PTransferHistory.findMany()
+     * 
+     * // Get first 10 P2PTransferHistories
+     * const p2PTransferHistories = await prisma.p2PTransferHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const p2PTransferHistoryWithIdOnly = await prisma.p2PTransferHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends P2PTransferHistoryFindManyArgs>(args?: SelectSubset<T, P2PTransferHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a P2PTransferHistory.
+     * @param {P2PTransferHistoryCreateArgs} args - Arguments to create a P2PTransferHistory.
+     * @example
+     * // Create one P2PTransferHistory
+     * const P2PTransferHistory = await prisma.p2PTransferHistory.create({
+     *   data: {
+     *     // ... data to create a P2PTransferHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends P2PTransferHistoryCreateArgs>(args: SelectSubset<T, P2PTransferHistoryCreateArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many P2PTransferHistories.
+     * @param {P2PTransferHistoryCreateManyArgs} args - Arguments to create many P2PTransferHistories.
+     * @example
+     * // Create many P2PTransferHistories
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends P2PTransferHistoryCreateManyArgs>(args?: SelectSubset<T, P2PTransferHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many P2PTransferHistories and returns the data saved in the database.
+     * @param {P2PTransferHistoryCreateManyAndReturnArgs} args - Arguments to create many P2PTransferHistories.
+     * @example
+     * // Create many P2PTransferHistories
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many P2PTransferHistories and only return the `id`
+     * const p2PTransferHistoryWithIdOnly = await prisma.p2PTransferHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends P2PTransferHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, P2PTransferHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a P2PTransferHistory.
+     * @param {P2PTransferHistoryDeleteArgs} args - Arguments to delete one P2PTransferHistory.
+     * @example
+     * // Delete one P2PTransferHistory
+     * const P2PTransferHistory = await prisma.p2PTransferHistory.delete({
+     *   where: {
+     *     // ... filter to delete one P2PTransferHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends P2PTransferHistoryDeleteArgs>(args: SelectSubset<T, P2PTransferHistoryDeleteArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one P2PTransferHistory.
+     * @param {P2PTransferHistoryUpdateArgs} args - Arguments to update one P2PTransferHistory.
+     * @example
+     * // Update one P2PTransferHistory
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends P2PTransferHistoryUpdateArgs>(args: SelectSubset<T, P2PTransferHistoryUpdateArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more P2PTransferHistories.
+     * @param {P2PTransferHistoryDeleteManyArgs} args - Arguments to filter P2PTransferHistories to delete.
+     * @example
+     * // Delete a few P2PTransferHistories
+     * const { count } = await prisma.p2PTransferHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends P2PTransferHistoryDeleteManyArgs>(args?: SelectSubset<T, P2PTransferHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more P2PTransferHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many P2PTransferHistories
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends P2PTransferHistoryUpdateManyArgs>(args: SelectSubset<T, P2PTransferHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more P2PTransferHistories and returns the data updated in the database.
+     * @param {P2PTransferHistoryUpdateManyAndReturnArgs} args - Arguments to update many P2PTransferHistories.
+     * @example
+     * // Update many P2PTransferHistories
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more P2PTransferHistories and only return the `id`
+     * const p2PTransferHistoryWithIdOnly = await prisma.p2PTransferHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends P2PTransferHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, P2PTransferHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one P2PTransferHistory.
+     * @param {P2PTransferHistoryUpsertArgs} args - Arguments to update or create a P2PTransferHistory.
+     * @example
+     * // Update or create a P2PTransferHistory
+     * const p2PTransferHistory = await prisma.p2PTransferHistory.upsert({
+     *   create: {
+     *     // ... data to create a P2PTransferHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the P2PTransferHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends P2PTransferHistoryUpsertArgs>(args: SelectSubset<T, P2PTransferHistoryUpsertArgs<ExtArgs>>): Prisma__P2PTransferHistoryClient<$Result.GetResult<Prisma.$P2PTransferHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of P2PTransferHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryCountArgs} args - Arguments to filter P2PTransferHistories to count.
+     * @example
+     * // Count the number of P2PTransferHistories
+     * const count = await prisma.p2PTransferHistory.count({
+     *   where: {
+     *     // ... the filter for the P2PTransferHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends P2PTransferHistoryCountArgs>(
+      args?: Subset<T, P2PTransferHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], P2PTransferHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a P2PTransferHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends P2PTransferHistoryAggregateArgs>(args: Subset<T, P2PTransferHistoryAggregateArgs>): Prisma.PrismaPromise<GetP2PTransferHistoryAggregateType<T>>
+
+    /**
+     * Group by P2PTransferHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {P2PTransferHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends P2PTransferHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: P2PTransferHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: P2PTransferHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, P2PTransferHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetP2PTransferHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the P2PTransferHistory model
+   */
+  readonly fields: P2PTransferHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for P2PTransferHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__P2PTransferHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    receiver<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the P2PTransferHistory model
+   */
+  interface P2PTransferHistoryFieldRefs {
+    readonly id: FieldRef<"P2PTransferHistory", 'String'>
+    readonly receiverID: FieldRef<"P2PTransferHistory", 'String'>
+    readonly receiverName: FieldRef<"P2PTransferHistory", 'String'>
+    readonly senderID: FieldRef<"P2PTransferHistory", 'String'>
+    readonly senderName: FieldRef<"P2PTransferHistory", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * P2PTransferHistory findUnique
+   */
+  export type P2PTransferHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which P2PTransferHistory to fetch.
+     */
+    where: P2PTransferHistoryWhereUniqueInput
+  }
+
+  /**
+   * P2PTransferHistory findUniqueOrThrow
+   */
+  export type P2PTransferHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which P2PTransferHistory to fetch.
+     */
+    where: P2PTransferHistoryWhereUniqueInput
+  }
+
+  /**
+   * P2PTransferHistory findFirst
+   */
+  export type P2PTransferHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which P2PTransferHistory to fetch.
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of P2PTransferHistories to fetch.
+     */
+    orderBy?: P2PTransferHistoryOrderByWithRelationInput | P2PTransferHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for P2PTransferHistories.
+     */
+    cursor?: P2PTransferHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` P2PTransferHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` P2PTransferHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of P2PTransferHistories.
+     */
+    distinct?: P2PTransferHistoryScalarFieldEnum | P2PTransferHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * P2PTransferHistory findFirstOrThrow
+   */
+  export type P2PTransferHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which P2PTransferHistory to fetch.
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of P2PTransferHistories to fetch.
+     */
+    orderBy?: P2PTransferHistoryOrderByWithRelationInput | P2PTransferHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for P2PTransferHistories.
+     */
+    cursor?: P2PTransferHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` P2PTransferHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` P2PTransferHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of P2PTransferHistories.
+     */
+    distinct?: P2PTransferHistoryScalarFieldEnum | P2PTransferHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * P2PTransferHistory findMany
+   */
+  export type P2PTransferHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which P2PTransferHistories to fetch.
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of P2PTransferHistories to fetch.
+     */
+    orderBy?: P2PTransferHistoryOrderByWithRelationInput | P2PTransferHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing P2PTransferHistories.
+     */
+    cursor?: P2PTransferHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` P2PTransferHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` P2PTransferHistories.
+     */
+    skip?: number
+    distinct?: P2PTransferHistoryScalarFieldEnum | P2PTransferHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * P2PTransferHistory create
+   */
+  export type P2PTransferHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a P2PTransferHistory.
+     */
+    data: XOR<P2PTransferHistoryCreateInput, P2PTransferHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * P2PTransferHistory createMany
+   */
+  export type P2PTransferHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many P2PTransferHistories.
+     */
+    data: P2PTransferHistoryCreateManyInput | P2PTransferHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * P2PTransferHistory createManyAndReturn
+   */
+  export type P2PTransferHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many P2PTransferHistories.
+     */
+    data: P2PTransferHistoryCreateManyInput | P2PTransferHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * P2PTransferHistory update
+   */
+  export type P2PTransferHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a P2PTransferHistory.
+     */
+    data: XOR<P2PTransferHistoryUpdateInput, P2PTransferHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which P2PTransferHistory to update.
+     */
+    where: P2PTransferHistoryWhereUniqueInput
+  }
+
+  /**
+   * P2PTransferHistory updateMany
+   */
+  export type P2PTransferHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update P2PTransferHistories.
+     */
+    data: XOR<P2PTransferHistoryUpdateManyMutationInput, P2PTransferHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which P2PTransferHistories to update
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * Limit how many P2PTransferHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * P2PTransferHistory updateManyAndReturn
+   */
+  export type P2PTransferHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update P2PTransferHistories.
+     */
+    data: XOR<P2PTransferHistoryUpdateManyMutationInput, P2PTransferHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which P2PTransferHistories to update
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * Limit how many P2PTransferHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * P2PTransferHistory upsert
+   */
+  export type P2PTransferHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the P2PTransferHistory to update in case it exists.
+     */
+    where: P2PTransferHistoryWhereUniqueInput
+    /**
+     * In case the P2PTransferHistory found by the `where` argument doesn't exist, create a new P2PTransferHistory with this data.
+     */
+    create: XOR<P2PTransferHistoryCreateInput, P2PTransferHistoryUncheckedCreateInput>
+    /**
+     * In case the P2PTransferHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<P2PTransferHistoryUpdateInput, P2PTransferHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * P2PTransferHistory delete
+   */
+  export type P2PTransferHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which P2PTransferHistory to delete.
+     */
+    where: P2PTransferHistoryWhereUniqueInput
+  }
+
+  /**
+   * P2PTransferHistory deleteMany
+   */
+  export type P2PTransferHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which P2PTransferHistories to delete
+     */
+    where?: P2PTransferHistoryWhereInput
+    /**
+     * Limit how many P2PTransferHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * P2PTransferHistory without action
+   */
+  export type P2PTransferHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2PTransferHistory
+     */
+    select?: P2PTransferHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the P2PTransferHistory
+     */
+    omit?: P2PTransferHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: P2PTransferHistoryInclude<ExtArgs> | null
   }
 
 
@@ -4467,6 +5698,17 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const P2PTransferHistoryScalarFieldEnum: {
+    id: 'id',
+    receiverID: 'receiverID',
+    receiverName: 'receiverName',
+    senderID: 'senderID',
+    senderName: 'senderName'
+  };
+
+  export type P2PTransferHistoryScalarFieldEnum = (typeof P2PTransferHistoryScalarFieldEnum)[keyof typeof P2PTransferHistoryScalarFieldEnum]
+
+
   export const BalanceScalarFieldEnum: {
     id: 'id',
     amount: 'amount',
@@ -4618,6 +5860,8 @@ export namespace Prisma {
     phoneno?: StringNullableFilter<"User"> | string | null
     onramptransactions?: OnRampTransactionsListRelationFilter
     balance?: BalanceListRelationFilter
+    sender?: P2PTransferHistoryListRelationFilter
+    receiver?: P2PTransferHistoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4629,6 +5873,8 @@ export namespace Prisma {
     phoneno?: SortOrderInput | SortOrder
     onramptransactions?: onRampTransactionsOrderByRelationAggregateInput
     balance?: BalanceOrderByRelationAggregateInput
+    sender?: P2PTransferHistoryOrderByRelationAggregateInput
+    receiver?: P2PTransferHistoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4643,6 +5889,8 @@ export namespace Prisma {
     password?: StringNullableFilter<"User"> | string | null
     onramptransactions?: OnRampTransactionsListRelationFilter
     balance?: BalanceListRelationFilter
+    sender?: P2PTransferHistoryListRelationFilter
+    receiver?: P2PTransferHistoryListRelationFilter
   }, "id" | "email" | "phoneno">
 
   export type UserOrderByWithAggregationInput = {
@@ -4667,6 +5915,64 @@ export namespace Prisma {
     authtype?: EnumAuthTypeWithAggregatesFilter<"User"> | $Enums.AuthType
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     phoneno?: StringNullableWithAggregatesFilter<"User"> | string | null
+  }
+
+  export type P2PTransferHistoryWhereInput = {
+    AND?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
+    OR?: P2PTransferHistoryWhereInput[]
+    NOT?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
+    id?: StringFilter<"P2PTransferHistory"> | string
+    receiverID?: StringFilter<"P2PTransferHistory"> | string
+    receiverName?: StringFilter<"P2PTransferHistory"> | string
+    senderID?: StringFilter<"P2PTransferHistory"> | string
+    senderName?: StringFilter<"P2PTransferHistory"> | string
+    receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type P2PTransferHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+    receiver?: UserOrderByWithRelationInput
+    sender?: UserOrderByWithRelationInput
+  }
+
+  export type P2PTransferHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
+    OR?: P2PTransferHistoryWhereInput[]
+    NOT?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
+    receiverID?: StringFilter<"P2PTransferHistory"> | string
+    receiverName?: StringFilter<"P2PTransferHistory"> | string
+    senderID?: StringFilter<"P2PTransferHistory"> | string
+    senderName?: StringFilter<"P2PTransferHistory"> | string
+    receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type P2PTransferHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+    _count?: P2PTransferHistoryCountOrderByAggregateInput
+    _max?: P2PTransferHistoryMaxOrderByAggregateInput
+    _min?: P2PTransferHistoryMinOrderByAggregateInput
+  }
+
+  export type P2PTransferHistoryScalarWhereWithAggregatesInput = {
+    AND?: P2PTransferHistoryScalarWhereWithAggregatesInput | P2PTransferHistoryScalarWhereWithAggregatesInput[]
+    OR?: P2PTransferHistoryScalarWhereWithAggregatesInput[]
+    NOT?: P2PTransferHistoryScalarWhereWithAggregatesInput | P2PTransferHistoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
+    receiverID?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
+    receiverName?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
+    senderID?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
+    senderName?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
   }
 
   export type BalanceWhereInput = {
@@ -4749,7 +6055,6 @@ export namespace Prisma {
   export type onRampTransactionsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     token?: string
-    userId?: string
     AND?: onRampTransactionsWhereInput | onRampTransactionsWhereInput[]
     OR?: onRampTransactionsWhereInput[]
     NOT?: onRampTransactionsWhereInput | onRampTransactionsWhereInput[]
@@ -4757,8 +6062,9 @@ export namespace Prisma {
     provider?: StringFilter<"onRampTransactions"> | string
     amount?: IntFilter<"onRampTransactions"> | number
     starttime?: DateTimeFilter<"onRampTransactions"> | Date | string
+    userId?: StringFilter<"onRampTransactions"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "token" | "userId">
+  }, "id" | "token">
 
   export type onRampTransactionsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4797,6 +6103,8 @@ export namespace Prisma {
     phoneno?: string | null
     onramptransactions?: onRampTransactionsCreateNestedManyWithoutUserInput
     balance?: BalanceCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryCreateNestedManyWithoutSenderInput
+    receiver?: P2PTransferHistoryCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4808,6 +6116,8 @@ export namespace Prisma {
     phoneno?: string | null
     onramptransactions?: onRampTransactionsUncheckedCreateNestedManyWithoutUserInput
     balance?: BalanceUncheckedCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryUncheckedCreateNestedManyWithoutSenderInput
+    receiver?: P2PTransferHistoryUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUpdateInput = {
@@ -4819,6 +6129,8 @@ export namespace Prisma {
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
     onramptransactions?: onRampTransactionsUpdateManyWithoutUserNestedInput
     balance?: BalanceUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUpdateManyWithoutSenderNestedInput
+    receiver?: P2PTransferHistoryUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4830,6 +6142,8 @@ export namespace Prisma {
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
     onramptransactions?: onRampTransactionsUncheckedUpdateManyWithoutUserNestedInput
     balance?: BalanceUncheckedUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUncheckedUpdateManyWithoutSenderNestedInput
+    receiver?: P2PTransferHistoryUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4857,6 +6171,60 @@ export namespace Prisma {
     authtype?: EnumAuthTypeFieldUpdateOperationsInput | $Enums.AuthType
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type P2PTransferHistoryCreateInput = {
+    id?: string
+    receiverName: string
+    senderName: string
+    receiver: UserCreateNestedOneWithoutReceiverInput
+    sender: UserCreateNestedOneWithoutSenderInput
+  }
+
+  export type P2PTransferHistoryUncheckedCreateInput = {
+    id?: string
+    receiverID: string
+    receiverName: string
+    senderID: string
+    senderName: string
+  }
+
+  export type P2PTransferHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+    receiver?: UserUpdateOneRequiredWithoutReceiverNestedInput
+    sender?: UserUpdateOneRequiredWithoutSenderNestedInput
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverID?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderID?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type P2PTransferHistoryCreateManyInput = {
+    id?: string
+    receiverID: string
+    receiverName: string
+    senderID: string
+    senderName: string
+  }
+
+  export type P2PTransferHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverID?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderID?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
   }
 
   export type BalanceCreateInput = {
@@ -4905,7 +6273,7 @@ export namespace Prisma {
   }
 
   export type onRampTransactionsCreateInput = {
-    status: $Enums.onRampStatus
+    status?: $Enums.onRampStatus
     token: string
     provider: string
     amount: number
@@ -4915,7 +6283,7 @@ export namespace Prisma {
 
   export type onRampTransactionsUncheckedCreateInput = {
     id?: number
-    status: $Enums.onRampStatus
+    status?: $Enums.onRampStatus
     token: string
     provider: string
     amount: number
@@ -4944,7 +6312,7 @@ export namespace Prisma {
 
   export type onRampTransactionsCreateManyInput = {
     id?: number
-    status: $Enums.onRampStatus
+    status?: $Enums.onRampStatus
     token: string
     provider: string
     amount: number
@@ -5019,6 +6387,12 @@ export namespace Prisma {
     none?: BalanceWhereInput
   }
 
+  export type P2PTransferHistoryListRelationFilter = {
+    every?: P2PTransferHistoryWhereInput
+    some?: P2PTransferHistoryWhereInput
+    none?: P2PTransferHistoryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5029,6 +6403,10 @@ export namespace Prisma {
   }
 
   export type BalanceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type P2PTransferHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5105,6 +6483,35 @@ export namespace Prisma {
     _max?: NestedEnumAuthTypeFilter<$PrismaModel>
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type P2PTransferHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+  }
+
+  export type P2PTransferHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+  }
+
+  export type P2PTransferHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5114,11 +6521,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type BalanceCountOrderByAggregateInput = {
@@ -5266,6 +6668,20 @@ export namespace Prisma {
     connect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
   }
 
+  export type P2PTransferHistoryCreateNestedManyWithoutSenderInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutSenderInput, P2PTransferHistoryUncheckedCreateWithoutSenderInput> | P2PTransferHistoryCreateWithoutSenderInput[] | P2PTransferHistoryUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutSenderInput | P2PTransferHistoryCreateOrConnectWithoutSenderInput[]
+    createMany?: P2PTransferHistoryCreateManySenderInputEnvelope
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+  }
+
+  export type P2PTransferHistoryCreateNestedManyWithoutReceiverInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutReceiverInput, P2PTransferHistoryUncheckedCreateWithoutReceiverInput> | P2PTransferHistoryCreateWithoutReceiverInput[] | P2PTransferHistoryUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutReceiverInput | P2PTransferHistoryCreateOrConnectWithoutReceiverInput[]
+    createMany?: P2PTransferHistoryCreateManyReceiverInputEnvelope
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+  }
+
   export type onRampTransactionsUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<onRampTransactionsCreateWithoutUserInput, onRampTransactionsUncheckedCreateWithoutUserInput> | onRampTransactionsCreateWithoutUserInput[] | onRampTransactionsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: onRampTransactionsCreateOrConnectWithoutUserInput | onRampTransactionsCreateOrConnectWithoutUserInput[]
@@ -5278,6 +6694,20 @@ export namespace Prisma {
     connectOrCreate?: BalanceCreateOrConnectWithoutUserInput | BalanceCreateOrConnectWithoutUserInput[]
     createMany?: BalanceCreateManyUserInputEnvelope
     connect?: BalanceWhereUniqueInput | BalanceWhereUniqueInput[]
+  }
+
+  export type P2PTransferHistoryUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutSenderInput, P2PTransferHistoryUncheckedCreateWithoutSenderInput> | P2PTransferHistoryCreateWithoutSenderInput[] | P2PTransferHistoryUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutSenderInput | P2PTransferHistoryCreateOrConnectWithoutSenderInput[]
+    createMany?: P2PTransferHistoryCreateManySenderInputEnvelope
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+  }
+
+  export type P2PTransferHistoryUncheckedCreateNestedManyWithoutReceiverInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutReceiverInput, P2PTransferHistoryUncheckedCreateWithoutReceiverInput> | P2PTransferHistoryCreateWithoutReceiverInput[] | P2PTransferHistoryUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutReceiverInput | P2PTransferHistoryCreateOrConnectWithoutReceiverInput[]
+    createMany?: P2PTransferHistoryCreateManyReceiverInputEnvelope
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5320,6 +6750,34 @@ export namespace Prisma {
     deleteMany?: BalanceScalarWhereInput | BalanceScalarWhereInput[]
   }
 
+  export type P2PTransferHistoryUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutSenderInput, P2PTransferHistoryUncheckedCreateWithoutSenderInput> | P2PTransferHistoryCreateWithoutSenderInput[] | P2PTransferHistoryUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutSenderInput | P2PTransferHistoryCreateOrConnectWithoutSenderInput[]
+    upsert?: P2PTransferHistoryUpsertWithWhereUniqueWithoutSenderInput | P2PTransferHistoryUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: P2PTransferHistoryCreateManySenderInputEnvelope
+    set?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    disconnect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    delete?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    update?: P2PTransferHistoryUpdateWithWhereUniqueWithoutSenderInput | P2PTransferHistoryUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: P2PTransferHistoryUpdateManyWithWhereWithoutSenderInput | P2PTransferHistoryUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
+  }
+
+  export type P2PTransferHistoryUpdateManyWithoutReceiverNestedInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutReceiverInput, P2PTransferHistoryUncheckedCreateWithoutReceiverInput> | P2PTransferHistoryCreateWithoutReceiverInput[] | P2PTransferHistoryUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutReceiverInput | P2PTransferHistoryCreateOrConnectWithoutReceiverInput[]
+    upsert?: P2PTransferHistoryUpsertWithWhereUniqueWithoutReceiverInput | P2PTransferHistoryUpsertWithWhereUniqueWithoutReceiverInput[]
+    createMany?: P2PTransferHistoryCreateManyReceiverInputEnvelope
+    set?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    disconnect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    delete?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    update?: P2PTransferHistoryUpdateWithWhereUniqueWithoutReceiverInput | P2PTransferHistoryUpdateWithWhereUniqueWithoutReceiverInput[]
+    updateMany?: P2PTransferHistoryUpdateManyWithWhereWithoutReceiverInput | P2PTransferHistoryUpdateManyWithWhereWithoutReceiverInput[]
+    deleteMany?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
+  }
+
   export type onRampTransactionsUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<onRampTransactionsCreateWithoutUserInput, onRampTransactionsUncheckedCreateWithoutUserInput> | onRampTransactionsCreateWithoutUserInput[] | onRampTransactionsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: onRampTransactionsCreateOrConnectWithoutUserInput | onRampTransactionsCreateOrConnectWithoutUserInput[]
@@ -5346,6 +6804,62 @@ export namespace Prisma {
     update?: BalanceUpdateWithWhereUniqueWithoutUserInput | BalanceUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BalanceUpdateManyWithWhereWithoutUserInput | BalanceUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BalanceScalarWhereInput | BalanceScalarWhereInput[]
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutSenderInput, P2PTransferHistoryUncheckedCreateWithoutSenderInput> | P2PTransferHistoryCreateWithoutSenderInput[] | P2PTransferHistoryUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutSenderInput | P2PTransferHistoryCreateOrConnectWithoutSenderInput[]
+    upsert?: P2PTransferHistoryUpsertWithWhereUniqueWithoutSenderInput | P2PTransferHistoryUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: P2PTransferHistoryCreateManySenderInputEnvelope
+    set?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    disconnect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    delete?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    update?: P2PTransferHistoryUpdateWithWhereUniqueWithoutSenderInput | P2PTransferHistoryUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: P2PTransferHistoryUpdateManyWithWhereWithoutSenderInput | P2PTransferHistoryUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateManyWithoutReceiverNestedInput = {
+    create?: XOR<P2PTransferHistoryCreateWithoutReceiverInput, P2PTransferHistoryUncheckedCreateWithoutReceiverInput> | P2PTransferHistoryCreateWithoutReceiverInput[] | P2PTransferHistoryUncheckedCreateWithoutReceiverInput[]
+    connectOrCreate?: P2PTransferHistoryCreateOrConnectWithoutReceiverInput | P2PTransferHistoryCreateOrConnectWithoutReceiverInput[]
+    upsert?: P2PTransferHistoryUpsertWithWhereUniqueWithoutReceiverInput | P2PTransferHistoryUpsertWithWhereUniqueWithoutReceiverInput[]
+    createMany?: P2PTransferHistoryCreateManyReceiverInputEnvelope
+    set?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    disconnect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    delete?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    connect?: P2PTransferHistoryWhereUniqueInput | P2PTransferHistoryWhereUniqueInput[]
+    update?: P2PTransferHistoryUpdateWithWhereUniqueWithoutReceiverInput | P2PTransferHistoryUpdateWithWhereUniqueWithoutReceiverInput[]
+    updateMany?: P2PTransferHistoryUpdateManyWithWhereWithoutReceiverInput | P2PTransferHistoryUpdateManyWithWhereWithoutReceiverInput[]
+    deleteMany?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutReceiverInput = {
+    create?: XOR<UserCreateWithoutReceiverInput, UserUncheckedCreateWithoutReceiverInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceiverInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSenderInput = {
+    create?: XOR<UserCreateWithoutSenderInput, UserUncheckedCreateWithoutSenderInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSenderInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutReceiverNestedInput = {
+    create?: XOR<UserCreateWithoutReceiverInput, UserUncheckedCreateWithoutReceiverInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReceiverInput
+    upsert?: UserUpsertWithoutReceiverInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceiverInput, UserUpdateWithoutReceiverInput>, UserUncheckedUpdateWithoutReceiverInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSenderNestedInput = {
+    create?: XOR<UserCreateWithoutSenderInput, UserUncheckedCreateWithoutSenderInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSenderInput
+    upsert?: UserUpsertWithoutSenderInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSenderInput, UserUpdateWithoutSenderInput>, UserUncheckedUpdateWithoutSenderInput>
   }
 
   export type UserCreateNestedOneWithoutBalanceInput = {
@@ -5563,7 +7077,7 @@ export namespace Prisma {
   }
 
   export type onRampTransactionsCreateWithoutUserInput = {
-    status: $Enums.onRampStatus
+    status?: $Enums.onRampStatus
     token: string
     provider: string
     amount: number
@@ -5572,7 +7086,7 @@ export namespace Prisma {
 
   export type onRampTransactionsUncheckedCreateWithoutUserInput = {
     id?: number
-    status: $Enums.onRampStatus
+    status?: $Enums.onRampStatus
     token: string
     provider: string
     amount: number
@@ -5607,6 +7121,54 @@ export namespace Prisma {
 
   export type BalanceCreateManyUserInputEnvelope = {
     data: BalanceCreateManyUserInput | BalanceCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type P2PTransferHistoryCreateWithoutSenderInput = {
+    id?: string
+    receiverName: string
+    senderName: string
+    receiver: UserCreateNestedOneWithoutReceiverInput
+  }
+
+  export type P2PTransferHistoryUncheckedCreateWithoutSenderInput = {
+    id?: string
+    receiverID: string
+    receiverName: string
+    senderName: string
+  }
+
+  export type P2PTransferHistoryCreateOrConnectWithoutSenderInput = {
+    where: P2PTransferHistoryWhereUniqueInput
+    create: XOR<P2PTransferHistoryCreateWithoutSenderInput, P2PTransferHistoryUncheckedCreateWithoutSenderInput>
+  }
+
+  export type P2PTransferHistoryCreateManySenderInputEnvelope = {
+    data: P2PTransferHistoryCreateManySenderInput | P2PTransferHistoryCreateManySenderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type P2PTransferHistoryCreateWithoutReceiverInput = {
+    id?: string
+    receiverName: string
+    senderName: string
+    sender: UserCreateNestedOneWithoutSenderInput
+  }
+
+  export type P2PTransferHistoryUncheckedCreateWithoutReceiverInput = {
+    id?: string
+    receiverName: string
+    senderID: string
+    senderName: string
+  }
+
+  export type P2PTransferHistoryCreateOrConnectWithoutReceiverInput = {
+    where: P2PTransferHistoryWhereUniqueInput
+    create: XOR<P2PTransferHistoryCreateWithoutReceiverInput, P2PTransferHistoryUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type P2PTransferHistoryCreateManyReceiverInputEnvelope = {
+    data: P2PTransferHistoryCreateManyReceiverInput | P2PTransferHistoryCreateManyReceiverInput[]
     skipDuplicates?: boolean
   }
 
@@ -5665,6 +7227,177 @@ export namespace Prisma {
     userId?: StringFilter<"Balance"> | string
   }
 
+  export type P2PTransferHistoryUpsertWithWhereUniqueWithoutSenderInput = {
+    where: P2PTransferHistoryWhereUniqueInput
+    update: XOR<P2PTransferHistoryUpdateWithoutSenderInput, P2PTransferHistoryUncheckedUpdateWithoutSenderInput>
+    create: XOR<P2PTransferHistoryCreateWithoutSenderInput, P2PTransferHistoryUncheckedCreateWithoutSenderInput>
+  }
+
+  export type P2PTransferHistoryUpdateWithWhereUniqueWithoutSenderInput = {
+    where: P2PTransferHistoryWhereUniqueInput
+    data: XOR<P2PTransferHistoryUpdateWithoutSenderInput, P2PTransferHistoryUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type P2PTransferHistoryUpdateManyWithWhereWithoutSenderInput = {
+    where: P2PTransferHistoryScalarWhereInput
+    data: XOR<P2PTransferHistoryUpdateManyMutationInput, P2PTransferHistoryUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type P2PTransferHistoryScalarWhereInput = {
+    AND?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
+    OR?: P2PTransferHistoryScalarWhereInput[]
+    NOT?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
+    id?: StringFilter<"P2PTransferHistory"> | string
+    receiverID?: StringFilter<"P2PTransferHistory"> | string
+    receiverName?: StringFilter<"P2PTransferHistory"> | string
+    senderID?: StringFilter<"P2PTransferHistory"> | string
+    senderName?: StringFilter<"P2PTransferHistory"> | string
+  }
+
+  export type P2PTransferHistoryUpsertWithWhereUniqueWithoutReceiverInput = {
+    where: P2PTransferHistoryWhereUniqueInput
+    update: XOR<P2PTransferHistoryUpdateWithoutReceiverInput, P2PTransferHistoryUncheckedUpdateWithoutReceiverInput>
+    create: XOR<P2PTransferHistoryCreateWithoutReceiverInput, P2PTransferHistoryUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type P2PTransferHistoryUpdateWithWhereUniqueWithoutReceiverInput = {
+    where: P2PTransferHistoryWhereUniqueInput
+    data: XOR<P2PTransferHistoryUpdateWithoutReceiverInput, P2PTransferHistoryUncheckedUpdateWithoutReceiverInput>
+  }
+
+  export type P2PTransferHistoryUpdateManyWithWhereWithoutReceiverInput = {
+    where: P2PTransferHistoryScalarWhereInput
+    data: XOR<P2PTransferHistoryUpdateManyMutationInput, P2PTransferHistoryUncheckedUpdateManyWithoutReceiverInput>
+  }
+
+  export type UserCreateWithoutReceiverInput = {
+    id?: string
+    email: string
+    name?: string | null
+    authtype?: $Enums.AuthType
+    password?: string | null
+    phoneno?: string | null
+    onramptransactions?: onRampTransactionsCreateNestedManyWithoutUserInput
+    balance?: BalanceCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserUncheckedCreateWithoutReceiverInput = {
+    id?: string
+    email: string
+    name?: string | null
+    authtype?: $Enums.AuthType
+    password?: string | null
+    phoneno?: string | null
+    onramptransactions?: onRampTransactionsUncheckedCreateNestedManyWithoutUserInput
+    balance?: BalanceUncheckedCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryUncheckedCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserCreateOrConnectWithoutReceiverInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReceiverInput, UserUncheckedCreateWithoutReceiverInput>
+  }
+
+  export type UserCreateWithoutSenderInput = {
+    id?: string
+    email: string
+    name?: string | null
+    authtype?: $Enums.AuthType
+    password?: string | null
+    phoneno?: string | null
+    onramptransactions?: onRampTransactionsCreateNestedManyWithoutUserInput
+    balance?: BalanceCreateNestedManyWithoutUserInput
+    receiver?: P2PTransferHistoryCreateNestedManyWithoutReceiverInput
+  }
+
+  export type UserUncheckedCreateWithoutSenderInput = {
+    id?: string
+    email: string
+    name?: string | null
+    authtype?: $Enums.AuthType
+    password?: string | null
+    phoneno?: string | null
+    onramptransactions?: onRampTransactionsUncheckedCreateNestedManyWithoutUserInput
+    balance?: BalanceUncheckedCreateNestedManyWithoutUserInput
+    receiver?: P2PTransferHistoryUncheckedCreateNestedManyWithoutReceiverInput
+  }
+
+  export type UserCreateOrConnectWithoutSenderInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSenderInput, UserUncheckedCreateWithoutSenderInput>
+  }
+
+  export type UserUpsertWithoutReceiverInput = {
+    update: XOR<UserUpdateWithoutReceiverInput, UserUncheckedUpdateWithoutReceiverInput>
+    create: XOR<UserCreateWithoutReceiverInput, UserUncheckedCreateWithoutReceiverInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReceiverInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReceiverInput, UserUncheckedUpdateWithoutReceiverInput>
+  }
+
+  export type UserUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    authtype?: EnumAuthTypeFieldUpdateOperationsInput | $Enums.AuthType
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneno?: NullableStringFieldUpdateOperationsInput | string | null
+    onramptransactions?: onRampTransactionsUpdateManyWithoutUserNestedInput
+    balance?: BalanceUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    authtype?: EnumAuthTypeFieldUpdateOperationsInput | $Enums.AuthType
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneno?: NullableStringFieldUpdateOperationsInput | string | null
+    onramptransactions?: onRampTransactionsUncheckedUpdateManyWithoutUserNestedInput
+    balance?: BalanceUncheckedUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUpsertWithoutSenderInput = {
+    update: XOR<UserUpdateWithoutSenderInput, UserUncheckedUpdateWithoutSenderInput>
+    create: XOR<UserCreateWithoutSenderInput, UserUncheckedCreateWithoutSenderInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSenderInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSenderInput, UserUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type UserUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    authtype?: EnumAuthTypeFieldUpdateOperationsInput | $Enums.AuthType
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneno?: NullableStringFieldUpdateOperationsInput | string | null
+    onramptransactions?: onRampTransactionsUpdateManyWithoutUserNestedInput
+    balance?: BalanceUpdateManyWithoutUserNestedInput
+    receiver?: P2PTransferHistoryUpdateManyWithoutReceiverNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    authtype?: EnumAuthTypeFieldUpdateOperationsInput | $Enums.AuthType
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneno?: NullableStringFieldUpdateOperationsInput | string | null
+    onramptransactions?: onRampTransactionsUncheckedUpdateManyWithoutUserNestedInput
+    balance?: BalanceUncheckedUpdateManyWithoutUserNestedInput
+    receiver?: P2PTransferHistoryUncheckedUpdateManyWithoutReceiverNestedInput
+  }
+
   export type UserCreateWithoutBalanceInput = {
     id?: string
     email: string
@@ -5673,6 +7406,8 @@ export namespace Prisma {
     password?: string | null
     phoneno?: string | null
     onramptransactions?: onRampTransactionsCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryCreateNestedManyWithoutSenderInput
+    receiver?: P2PTransferHistoryCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutBalanceInput = {
@@ -5683,6 +7418,8 @@ export namespace Prisma {
     password?: string | null
     phoneno?: string | null
     onramptransactions?: onRampTransactionsUncheckedCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryUncheckedCreateNestedManyWithoutSenderInput
+    receiver?: P2PTransferHistoryUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutBalanceInput = {
@@ -5709,6 +7446,8 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
     onramptransactions?: onRampTransactionsUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUpdateManyWithoutSenderNestedInput
+    receiver?: P2PTransferHistoryUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBalanceInput = {
@@ -5719,6 +7458,8 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
     onramptransactions?: onRampTransactionsUncheckedUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUncheckedUpdateManyWithoutSenderNestedInput
+    receiver?: P2PTransferHistoryUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserCreateWithoutOnramptransactionsInput = {
@@ -5729,6 +7470,8 @@ export namespace Prisma {
     password?: string | null
     phoneno?: string | null
     balance?: BalanceCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryCreateNestedManyWithoutSenderInput
+    receiver?: P2PTransferHistoryCreateNestedManyWithoutReceiverInput
   }
 
   export type UserUncheckedCreateWithoutOnramptransactionsInput = {
@@ -5739,6 +7482,8 @@ export namespace Prisma {
     password?: string | null
     phoneno?: string | null
     balance?: BalanceUncheckedCreateNestedManyWithoutUserInput
+    sender?: P2PTransferHistoryUncheckedCreateNestedManyWithoutSenderInput
+    receiver?: P2PTransferHistoryUncheckedCreateNestedManyWithoutReceiverInput
   }
 
   export type UserCreateOrConnectWithoutOnramptransactionsInput = {
@@ -5765,6 +7510,8 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: BalanceUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUpdateManyWithoutSenderNestedInput
+    receiver?: P2PTransferHistoryUpdateManyWithoutReceiverNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOnramptransactionsInput = {
@@ -5775,11 +7522,13 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     phoneno?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: BalanceUncheckedUpdateManyWithoutUserNestedInput
+    sender?: P2PTransferHistoryUncheckedUpdateManyWithoutSenderNestedInput
+    receiver?: P2PTransferHistoryUncheckedUpdateManyWithoutReceiverNestedInput
   }
 
   export type onRampTransactionsCreateManyUserInput = {
     id?: number
-    status: $Enums.onRampStatus
+    status?: $Enums.onRampStatus
     token: string
     provider: string
     amount: number
@@ -5790,6 +7539,20 @@ export namespace Prisma {
     id?: number
     amount: number
     locked: number
+  }
+
+  export type P2PTransferHistoryCreateManySenderInput = {
+    id?: string
+    receiverID: string
+    receiverName: string
+    senderName: string
+  }
+
+  export type P2PTransferHistoryCreateManyReceiverInput = {
+    id?: string
+    receiverName: string
+    senderID: string
+    senderName: string
   }
 
   export type onRampTransactionsUpdateWithoutUserInput = {
@@ -5833,6 +7596,48 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     locked?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type P2PTransferHistoryUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+    receiver?: UserUpdateOneRequiredWithoutReceiverNestedInput
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverID?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateManyWithoutSenderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverID?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type P2PTransferHistoryUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+    sender?: UserUpdateOneRequiredWithoutSenderNestedInput
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderID?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type P2PTransferHistoryUncheckedUpdateManyWithoutReceiverInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiverName?: StringFieldUpdateOperationsInput | string
+    senderID?: StringFieldUpdateOperationsInput | string
+    senderName?: StringFieldUpdateOperationsInput | string
   }
 
 

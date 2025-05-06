@@ -23,6 +23,18 @@ model User {
   phoneno            String?              @unique
   onramptransactions onRampTransactions[]
   balance            Balance[]
+  sender             P2PTransferHistory[] @relation("Sender")
+  receiver           P2PTransferHistory[] @relation("Receiver")
+}
+
+model P2PTransferHistory {
+  id           String @id @default(uuid())
+  receiverID   String
+  receiverName String
+  senderID     String
+  senderName   String
+  receiver     User   @relation("Receiver", fields: [receiverID], references: [id])
+  sender       User   @relation("Sender", fields: [senderID], references: [id])
 }
 
 model Balance {
@@ -35,12 +47,12 @@ model Balance {
 
 model onRampTransactions {
   id        Int          @id @default(autoincrement())
-  status    onRampStatus
+  status    onRampStatus @default(Pending)
   token     String       @unique
   provider  String
   amount    Int
   starttime DateTime
-  userId    String       @unique
+  userId    String
   user      User         @relation(fields: [userId], references: [id])
 }
 

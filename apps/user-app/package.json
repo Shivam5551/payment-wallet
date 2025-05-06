@@ -13,6 +13,7 @@
   "dependencies": {
     "@repo/ui": "workspace:*",
     "@tailwindcss/postcss": "^4.1.4",
+    "axios": "^1.9.0",
     "bcrypt-ts": "^6.0.0",
     "jotai": "^2.12.3",
     "next": "^15.3.0",
@@ -21,11 +22,13 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-toastify": "^11.0.5",
-    "tailwindcss": "^4.1.4"
+    "tailwindcss": "^4.1.4",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@repo/db": "workspace:*",
     "@repo/eslint-config": "workspace:*",
+    "@repo/store": "workspace:*",
     "@repo/tailwind-postcss-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.14.0",

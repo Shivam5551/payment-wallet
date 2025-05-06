@@ -17,7 +17,7 @@ export const AuthButton = ({ session })=> {
     }
 
     return (
-        <button onClick={AuthHandler} className="bg-black text-white items-center flex hover:text-black transform justify-center px-2 py-1 transition-colors duration-200 rounded-md hover:bg-gray-400">
+        <button onClick={AuthHandler} className="bg-black text-white items-center font-semibold flex hover:cursor-pointer transform justify-center py-2 px-4 transition-colors duration-400 rounded-xl hover:rounded-3xl hover:bg-neutral-800">
                     {isAuthenticated ? "Logout" : "Login"}
         </button>
     )

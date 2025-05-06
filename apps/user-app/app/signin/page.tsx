@@ -42,8 +42,7 @@ export default function SignIn() {
                 password: formData.get('password') as string,
                 redirect: false,
             });
-            console.log("Login response:", res);
-    
+            // console.log("Login response:", res);
             if (res?.ok && !res.error) {
                 router.push('/');
             } else {
@@ -74,7 +73,7 @@ export default function SignIn() {
                     </div>
                     <button
                         type='submit'
-                        className="bg-blue-500 text-white flex items-center p-3 rounded-lg w-full justify-center gap-3 hover:bg-blue-600 transition-all duration-500 hover:shadow-lg hover:rounded-3xl shadow-sm transform"
+                        className="bg-blue-500 text-white flex items-center p-3 rounded-lg w-full justify-center gap-3 hover:bg-blue-600 transition-all hover:cursor-pointer duration-500 hover:shadow-lg hover:rounded-3xl shadow-sm transform"
                     >
                         {isSubmitting ? <div className='h-5 w-5 rounded-full border-2 border-white border-t-transparent animate-spin' /> : <><EmailIcon />Sign in with Email</>}
                     </button>
@@ -93,7 +92,7 @@ export default function SignIn() {
                 <div className="space-y-4">
                     <Button
                         onClickHandler={async () => await signIn("google", { callbackUrl: "/"})}
-                        className="bg-neutral-50 flex items-center p-3 rounded-lg w-full justify-center gap-3 hover:bg-neutral-300 transition-all duration-500 hover:shadow-lg hover:rounded-2xl shadow-sm transform"
+                        className="bg-neutral-50 flex items-center p-3 rounded-lg w-full justify-center gap-3 hover:bg-neutral-300 transition-all duration-500 hover:shadow-lg hover:rounded-2xl hover:cursor-pointer shadow-sm transform"
                     >
                         <GoogleIcon />
                         Sign in with Google
@@ -101,7 +100,7 @@ export default function SignIn() {
 
                     <Button
                         onClickHandler={async () => await signIn("github", { callbackUrl: "/"})}
-                        className="bg-neutral-50 flex items-center p-3 rounded-lg w-full justify-center gap-3 hover:bg-neutral-300 transition-all duration-500 hover:shadow-lg hover:rounded-2xl shadow-sm transform"
+                        className="bg-neutral-50 flex items-center p-3 rounded-lg w-full justify-center gap-3 hover:bg-neutral-300 transition-all duration-500 hover:shadow-lg hover:rounded-2xl hover:cursor-pointer shadow-sm transform"
                     >
                         <GitHubIcon />
                         Sign in with GitHub

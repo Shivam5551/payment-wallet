@@ -126,6 +126,14 @@ exports.Prisma.UserScalarFieldEnum = {
   phoneno: 'phoneno'
 };
 
+exports.Prisma.P2PTransferHistoryScalarFieldEnum = {
+  id: 'id',
+  receiverID: 'receiverID',
+  receiverName: 'receiverName',
+  senderID: 'senderID',
+  senderName: 'senderName'
+};
+
 exports.Prisma.BalanceScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
@@ -171,6 +179,7 @@ exports.onRampStatus = exports.$Enums.onRampStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  P2PTransferHistory: 'P2PTransferHistory',
   Balance: 'Balance',
   onRampTransactions: 'onRampTransactions'
 };
