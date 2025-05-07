@@ -59,13 +59,19 @@ export async function POST(req: NextRequest) {
             (email && user?.email !== email)
         ) {
             return NextResponse.json(
-                { success: false, message: "Contact info mismatch" },
+                { success: false, message: "Contact info mismatch!" },
                 { status: 400 }
             );
         }
+        if(user.id === session.user.id) {
+            return NextResponse.json(
+                { success: false, message: "Cannot Send money to yourself!" },
+                { status: 400 }
+            )
+        }
         else {
             return NextResponse.json(
-                { success: true, receiver: user.name },
+                { success: true, receiver: user.name, receiverId: user.id},
                 { status: 200 }
             );
         }

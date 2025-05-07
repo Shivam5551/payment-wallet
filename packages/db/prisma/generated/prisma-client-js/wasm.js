@@ -128,10 +128,12 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.P2PTransferHistoryScalarFieldEnum = {
   id: 'id',
+  timestamp: 'timestamp',
   receiverID: 'receiverID',
   receiverName: 'receiverName',
   senderID: 'senderID',
-  senderName: 'senderName'
+  senderName: 'senderName',
+  amount: 'amount'
 };
 
 exports.Prisma.BalanceScalarFieldEnum = {

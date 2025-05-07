@@ -49,7 +49,7 @@ export default async function Home() {
         {/* Welcome Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-4xl font-bold text-gray-800">
-            Welcome back, <span className="text-indigo-500">{name[0].toUpperCase()+name.slice(1, name.length)}</span>
+            Welcome back, <span className="text-indigo-500">{name[0].toUpperCase()+name.slice(1, name.length)+ "!"}</span>
           </h1>
           <p className="text-gray-600 mt-2">Here's an overview of your wallet</p>
         </div>

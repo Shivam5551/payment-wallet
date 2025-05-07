@@ -22,6 +22,12 @@ async function main() {
           provider: "HDFC Bank",
         },
       },
+      balance: {
+        create: {
+          locked: 10,
+          amount:  20000
+        }
+      }
     },
   })
   const bob = await prisma.user.upsert({

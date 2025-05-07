@@ -29,17 +29,32 @@ export default async function TransactionsAction({ provider, amount }: { provide
     });
     // console.log(session.user.id);
     
-    await fetch("http://localhost:4000/", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-            token: token,
-            userID: session.user.id,
-            amount: amount
-        })
-    });
+    try {
+        await fetch("http://localhost:4000/", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                token: token,
+                userID: session.user.id,
+                amount: amount
+            })
+        });
+    } catch (error) {
+        await prisma.onRampTransactions.update({
+            where: {
+                token: token
+            }, 
+            data: {
+                status: "Failure"
+            }
+        });
+        return {
+            success: false,
+            message: "Bank Server is Down"
+        }
+    }
     return { 
         success: true,
         message: "Done"

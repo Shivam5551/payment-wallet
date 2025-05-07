@@ -6,14 +6,14 @@ export const RecentTransactions = ({ transactions }: { transactions: Transaction
     const recentTransactions = transactions;
 
     return (
-        <div className="mt-4 sm:mt-7 p-10 bg-white border border-blue-100 rounded-xl shadow-lg">
-            <SubHeading title="Recent Transcations" />
+        <div className="mt-4 p-3 sm:p-10 pt-5 bg-white border border-blue-100 rounded-xl shadow-xl">
+            <SubHeading title="Recent Transcations" className=""/>
             {(recentTransactions && recentTransactions.length === 0) ?
                 <div className="h-20 w-full text-base sm:text-lg font-semibold flex justify-center items-center">
                     No Recent Tranactions Found!
                 </div>
                 :
-                <div className="space-y-2 mt-2 overflow-auto h-50">
+                <div className="space-y-2 mt-2 overflow-auto border rounded-md border-neutral-200 max-h-50">
                     {recentTransactions?.map((t: Transactions, index: number) => (
                         <div key={index} className="flex justify-between items-center border border-red-100 mt-0.5 p-4 bg-white shadow-sm rounded-lg">
                             <div className="space-y-1">
@@ -47,7 +47,7 @@ export const RecentTransactions = ({ transactions }: { transactions: Transaction
                 </div>
         
             }
-            {(recentTransactions && recentTransactions?.length > 0) ? <div className="flex bg-blue-600 rounded-lg hover:cursor-pointer hover:bg-blue-700 text-white p-2 font-semibold mt-2 items-center justify-center">Load More</div> : ""}
+            {(recentTransactions && recentTransactions?.length > 0) ? <div className="flex bg-blue-600 rounded-lg hover:cursor-pointer hover:bg-blue-700 text-white p-2 font-semibold mt-4 items-center justify-center">Load More</div> : ""}
         </div>
     )
 }

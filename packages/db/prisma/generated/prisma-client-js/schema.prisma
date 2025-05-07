@@ -28,19 +28,21 @@ model User {
 }
 
 model P2PTransferHistory {
-  id           String @id @default(uuid())
+  id           String   @id @default(uuid())
+  timestamp    DateTime @default(now())
   receiverID   String
   receiverName String
   senderID     String
   senderName   String
-  receiver     User   @relation("Receiver", fields: [receiverID], references: [id])
-  sender       User   @relation("Sender", fields: [senderID], references: [id])
+  amount       Int
+  receiver     User     @relation("Receiver", fields: [receiverID], references: [id])
+  sender       User     @relation("Sender", fields: [senderID], references: [id])
 }
 
 model Balance {
   id     Int    @id @default(autoincrement())
   amount Int
-  locked Int
+  locked Int    @default(10)
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 }

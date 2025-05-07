@@ -52,10 +52,10 @@ export default async function Transfer (){
             <Appbar/>
             <Sidebar/>
             <div className="p-5 sm:p-10 sm:ml-50 ml-[10%] overflow-auto">
-            <h1 className="pb-4 sm:pt-10 ml-4 text-2xl sm:text-5xl font-extrabold text-indigo-400">Transfer</h1>
+            <h1 className="pb-4  ml-4 text-2xl sm:text-5xl font-extrabold text-indigo-400">Transfer</h1>
             <div className="grid gap-4 grid-cols-1 overflow-auto lg:grid-cols-2">
                 <Amount />
-                <div className="w-full h-full">
+                <div className="w-full h-full bg-white">
                     <Balance />
                     <RecentTransactions transactions={transactions}/>
                 </div>

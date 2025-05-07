@@ -7,10 +7,12 @@ import { toast } from "react-toastify";
 export const SendCard = () => {
     const [receiver, setReceiver] = useState('');
     const [sending, setSending] = useState(false);
+    const [receiverId, setReceiverId] = useState('');
+
     const [formData, setFormData] = useState({
         phoneno: "",
         email: "",
-        amount: ""
+        amount: 0
     })
 
     useEffect(() => {
@@ -21,15 +23,22 @@ export const SendCard = () => {
             if (formData.amount && (formData.email || formData.phoneno) && receiver && sending) {
                 await new Promise(resolve => setTimeout(resolve, 500));
                 try {
+                    const body = {
+                        phoneno: formData.phoneno,
+                        email: formData.email,
+                        amount: formData.amount,
+                        receiverId: receiverId,
+                        receiverName: receiver
+                    }
                     const res = await axios.post("/api/send",
-                        formData
+                        body
                     )
                     if (res.data.success) {
-                        toast(res.data.message || "Payment Successful", {
+                        toast(`Sent ₹${formData.amount/100} to ${receiver[0]?.toUpperCase()+receiver.slice(1,receiver.length)}`, {
                             theme: "colored",
                             type: "success",
                             draggable: true,
-                            autoClose: 3000,
+                            autoClose: 4000,
                             pauseOnHover: true
                         });
                     } else {
@@ -41,7 +50,7 @@ export const SendCard = () => {
                         })
                     }
                 } catch (error) {
-                    toast("Payment Failed", {
+                    toast((error as AxiosError)?.response?.data?.message || "Payment Failed", {
                         theme: "colored",
                         type: "error",
                         autoClose: 3000,
@@ -65,11 +74,28 @@ export const SendCard = () => {
       
         if (!sending && !receiver && amount && (phoneno || email)) {
           setSending(true);
-          setFormData({ phoneno, email, amount });
+          setFormData({ phoneno, email, amount: Number(amount)*100 });
+          if(Number(amount) < 0) {
+            toast("Amount should be greater than 0", {
+                type: "info",
+                theme: "colored",
+                autoClose: 4000,
+                draggable: true,
+                pauseOnHover: true
+            })
+            setFormData({ 
+                phoneno: "",
+                email: "",
+                amount: 0,
+            })
+            setSending(false)
+            return;
+          }
       
           try {
             const { data } = await axios.post('/api/receiver', { phoneno, email });
             setReceiver(data.receiver);
+            setReceiverId(data.receiverId);
           } catch (err) {
             console.error('Error fetching receiver:', err);
             toast((err as AxiosError)?.response?.data?.message || 'Failed to fetch receiver details', {
@@ -145,7 +171,7 @@ export const SendCard = () => {
                         required
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
                         id="amount"
-                        type="number"
+                        type="float"
                         name="amount"
                         placeholder="Enter Amount"
                     />

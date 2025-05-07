@@ -2403,58 +2403,88 @@ export namespace Prisma {
 
   export type AggregateP2PTransferHistory = {
     _count: P2PTransferHistoryCountAggregateOutputType | null
+    _avg: P2PTransferHistoryAvgAggregateOutputType | null
+    _sum: P2PTransferHistorySumAggregateOutputType | null
     _min: P2PTransferHistoryMinAggregateOutputType | null
     _max: P2PTransferHistoryMaxAggregateOutputType | null
   }
 
+  export type P2PTransferHistoryAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type P2PTransferHistorySumAggregateOutputType = {
+    amount: number | null
+  }
+
   export type P2PTransferHistoryMinAggregateOutputType = {
     id: string | null
+    timestamp: Date | null
     receiverID: string | null
     receiverName: string | null
     senderID: string | null
     senderName: string | null
+    amount: number | null
   }
 
   export type P2PTransferHistoryMaxAggregateOutputType = {
     id: string | null
+    timestamp: Date | null
     receiverID: string | null
     receiverName: string | null
     senderID: string | null
     senderName: string | null
+    amount: number | null
   }
 
   export type P2PTransferHistoryCountAggregateOutputType = {
     id: number
+    timestamp: number
     receiverID: number
     receiverName: number
     senderID: number
     senderName: number
+    amount: number
     _all: number
   }
 
 
+  export type P2PTransferHistoryAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type P2PTransferHistorySumAggregateInputType = {
+    amount?: true
+  }
+
   export type P2PTransferHistoryMinAggregateInputType = {
     id?: true
+    timestamp?: true
     receiverID?: true
     receiverName?: true
     senderID?: true
     senderName?: true
+    amount?: true
   }
 
   export type P2PTransferHistoryMaxAggregateInputType = {
     id?: true
+    timestamp?: true
     receiverID?: true
     receiverName?: true
     senderID?: true
     senderName?: true
+    amount?: true
   }
 
   export type P2PTransferHistoryCountAggregateInputType = {
     id?: true
+    timestamp?: true
     receiverID?: true
     receiverName?: true
     senderID?: true
     senderName?: true
+    amount?: true
     _all?: true
   }
 
@@ -2496,6 +2526,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: P2PTransferHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: P2PTransferHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: P2PTransferHistoryMinAggregateInputType
@@ -2526,17 +2568,23 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: P2PTransferHistoryCountAggregateInputType | true
+    _avg?: P2PTransferHistoryAvgAggregateInputType
+    _sum?: P2PTransferHistorySumAggregateInputType
     _min?: P2PTransferHistoryMinAggregateInputType
     _max?: P2PTransferHistoryMaxAggregateInputType
   }
 
   export type P2PTransferHistoryGroupByOutputType = {
     id: string
+    timestamp: Date
     receiverID: string
     receiverName: string
     senderID: string
     senderName: string
+    amount: number
     _count: P2PTransferHistoryCountAggregateOutputType | null
+    _avg: P2PTransferHistoryAvgAggregateOutputType | null
+    _sum: P2PTransferHistorySumAggregateOutputType | null
     _min: P2PTransferHistoryMinAggregateOutputType | null
     _max: P2PTransferHistoryMaxAggregateOutputType | null
   }
@@ -2557,43 +2605,51 @@ export namespace Prisma {
 
   export type P2PTransferHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    timestamp?: boolean
     receiverID?: boolean
     receiverName?: boolean
     senderID?: boolean
     senderName?: boolean
+    amount?: boolean
     receiver?: boolean | UserDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["p2PTransferHistory"]>
 
   export type P2PTransferHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    timestamp?: boolean
     receiverID?: boolean
     receiverName?: boolean
     senderID?: boolean
     senderName?: boolean
+    amount?: boolean
     receiver?: boolean | UserDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["p2PTransferHistory"]>
 
   export type P2PTransferHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    timestamp?: boolean
     receiverID?: boolean
     receiverName?: boolean
     senderID?: boolean
     senderName?: boolean
+    amount?: boolean
     receiver?: boolean | UserDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["p2PTransferHistory"]>
 
   export type P2PTransferHistorySelectScalar = {
     id?: boolean
+    timestamp?: boolean
     receiverID?: boolean
     receiverName?: boolean
     senderID?: boolean
     senderName?: boolean
+    amount?: boolean
   }
 
-  export type P2PTransferHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "receiverID" | "receiverName" | "senderID" | "senderName", ExtArgs["result"]["p2PTransferHistory"]>
+  export type P2PTransferHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "timestamp" | "receiverID" | "receiverName" | "senderID" | "senderName" | "amount", ExtArgs["result"]["p2PTransferHistory"]>
   export type P2PTransferHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     receiver?: boolean | UserDefaultArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
@@ -2615,10 +2671,12 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      timestamp: Date
       receiverID: string
       receiverName: string
       senderID: string
       senderName: string
+      amount: number
     }, ExtArgs["result"]["p2PTransferHistory"]>
     composites: {}
   }
@@ -3045,10 +3103,12 @@ export namespace Prisma {
    */
   interface P2PTransferHistoryFieldRefs {
     readonly id: FieldRef<"P2PTransferHistory", 'String'>
+    readonly timestamp: FieldRef<"P2PTransferHistory", 'DateTime'>
     readonly receiverID: FieldRef<"P2PTransferHistory", 'String'>
     readonly receiverName: FieldRef<"P2PTransferHistory", 'String'>
     readonly senderID: FieldRef<"P2PTransferHistory", 'String'>
     readonly senderName: FieldRef<"P2PTransferHistory", 'String'>
+    readonly amount: FieldRef<"P2PTransferHistory", 'Int'>
   }
     
 
@@ -5700,10 +5760,12 @@ export namespace Prisma {
 
   export const P2PTransferHistoryScalarFieldEnum: {
     id: 'id',
+    timestamp: 'timestamp',
     receiverID: 'receiverID',
     receiverName: 'receiverName',
     senderID: 'senderID',
-    senderName: 'senderName'
+    senderName: 'senderName',
+    amount: 'amount'
   };
 
   export type P2PTransferHistoryScalarFieldEnum = (typeof P2PTransferHistoryScalarFieldEnum)[keyof typeof P2PTransferHistoryScalarFieldEnum]
@@ -5790,6 +5852,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -5814,20 +5890,6 @@ export namespace Prisma {
    * Reference to a field of type 'onRampStatus[]'
    */
   export type ListEnumonRampStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'onRampStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -5922,20 +5984,24 @@ export namespace Prisma {
     OR?: P2PTransferHistoryWhereInput[]
     NOT?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
     id?: StringFilter<"P2PTransferHistory"> | string
+    timestamp?: DateTimeFilter<"P2PTransferHistory"> | Date | string
     receiverID?: StringFilter<"P2PTransferHistory"> | string
     receiverName?: StringFilter<"P2PTransferHistory"> | string
     senderID?: StringFilter<"P2PTransferHistory"> | string
     senderName?: StringFilter<"P2PTransferHistory"> | string
+    amount?: IntFilter<"P2PTransferHistory"> | number
     receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type P2PTransferHistoryOrderByWithRelationInput = {
     id?: SortOrder
+    timestamp?: SortOrder
     receiverID?: SortOrder
     receiverName?: SortOrder
     senderID?: SortOrder
     senderName?: SortOrder
+    amount?: SortOrder
     receiver?: UserOrderByWithRelationInput
     sender?: UserOrderByWithRelationInput
   }
@@ -5945,23 +6011,29 @@ export namespace Prisma {
     AND?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
     OR?: P2PTransferHistoryWhereInput[]
     NOT?: P2PTransferHistoryWhereInput | P2PTransferHistoryWhereInput[]
+    timestamp?: DateTimeFilter<"P2PTransferHistory"> | Date | string
     receiverID?: StringFilter<"P2PTransferHistory"> | string
     receiverName?: StringFilter<"P2PTransferHistory"> | string
     senderID?: StringFilter<"P2PTransferHistory"> | string
     senderName?: StringFilter<"P2PTransferHistory"> | string
+    amount?: IntFilter<"P2PTransferHistory"> | number
     receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type P2PTransferHistoryOrderByWithAggregationInput = {
     id?: SortOrder
+    timestamp?: SortOrder
     receiverID?: SortOrder
     receiverName?: SortOrder
     senderID?: SortOrder
     senderName?: SortOrder
+    amount?: SortOrder
     _count?: P2PTransferHistoryCountOrderByAggregateInput
+    _avg?: P2PTransferHistoryAvgOrderByAggregateInput
     _max?: P2PTransferHistoryMaxOrderByAggregateInput
     _min?: P2PTransferHistoryMinOrderByAggregateInput
+    _sum?: P2PTransferHistorySumOrderByAggregateInput
   }
 
   export type P2PTransferHistoryScalarWhereWithAggregatesInput = {
@@ -5969,10 +6041,12 @@ export namespace Prisma {
     OR?: P2PTransferHistoryScalarWhereWithAggregatesInput[]
     NOT?: P2PTransferHistoryScalarWhereWithAggregatesInput | P2PTransferHistoryScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
+    timestamp?: DateTimeWithAggregatesFilter<"P2PTransferHistory"> | Date | string
     receiverID?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
     receiverName?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
     senderID?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
     senderName?: StringWithAggregatesFilter<"P2PTransferHistory"> | string
+    amount?: IntWithAggregatesFilter<"P2PTransferHistory"> | number
   }
 
   export type BalanceWhereInput = {
@@ -6175,68 +6249,82 @@ export namespace Prisma {
 
   export type P2PTransferHistoryCreateInput = {
     id?: string
+    timestamp?: Date | string
     receiverName: string
     senderName: string
+    amount: number
     receiver: UserCreateNestedOneWithoutReceiverInput
     sender: UserCreateNestedOneWithoutSenderInput
   }
 
   export type P2PTransferHistoryUncheckedCreateInput = {
     id?: string
+    timestamp?: Date | string
     receiverID: string
     receiverName: string
     senderID: string
     senderName: string
+    amount: number
   }
 
   export type P2PTransferHistoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
     receiver?: UserUpdateOneRequiredWithoutReceiverNestedInput
     sender?: UserUpdateOneRequiredWithoutSenderNestedInput
   }
 
   export type P2PTransferHistoryUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverID?: StringFieldUpdateOperationsInput | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderID?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type P2PTransferHistoryCreateManyInput = {
     id?: string
+    timestamp?: Date | string
     receiverID: string
     receiverName: string
     senderID: string
     senderName: string
+    amount: number
   }
 
   export type P2PTransferHistoryUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type P2PTransferHistoryUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverID?: StringFieldUpdateOperationsInput | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderID?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type BalanceCreateInput = {
     amount: number
-    locked: number
+    locked?: number
     user: UserCreateNestedOneWithoutBalanceInput
   }
 
   export type BalanceUncheckedCreateInput = {
     id?: number
     amount: number
-    locked: number
+    locked?: number
     userId: string
   }
 
@@ -6256,7 +6344,7 @@ export namespace Prisma {
   export type BalanceCreateManyInput = {
     id?: number
     amount: number
-    locked: number
+    locked?: number
     userId: string
   }
 
@@ -6483,33 +6571,15 @@ export namespace Prisma {
     _max?: NestedEnumAuthTypeFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
-  export type P2PTransferHistoryCountOrderByAggregateInput = {
-    id?: SortOrder
-    receiverID?: SortOrder
-    receiverName?: SortOrder
-    senderID?: SortOrder
-    senderName?: SortOrder
-  }
-
-  export type P2PTransferHistoryMaxOrderByAggregateInput = {
-    id?: SortOrder
-    receiverID?: SortOrder
-    receiverName?: SortOrder
-    senderID?: SortOrder
-    senderName?: SortOrder
-  }
-
-  export type P2PTransferHistoryMinOrderByAggregateInput = {
-    id?: SortOrder
-    receiverID?: SortOrder
-    receiverName?: SortOrder
-    senderID?: SortOrder
-    senderName?: SortOrder
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -6521,6 +6591,79 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type P2PTransferHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    timestamp?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type P2PTransferHistoryAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type P2PTransferHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    timestamp?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type P2PTransferHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    timestamp?: SortOrder
+    receiverID?: SortOrder
+    receiverName?: SortOrder
+    senderID?: SortOrder
+    senderName?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type P2PTransferHistorySumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type BalanceCountOrderByAggregateInput = {
@@ -6556,38 +6699,11 @@ export namespace Prisma {
     locked?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
   export type EnumonRampStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.onRampStatus | EnumonRampStatusFieldRefInput<$PrismaModel>
     in?: $Enums.onRampStatus[] | ListEnumonRampStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.onRampStatus[] | ListEnumonRampStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumonRampStatusFilter<$PrismaModel> | $Enums.onRampStatus
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type onRampTransactionsCountOrderByAggregateInput = {
@@ -6638,20 +6754,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumonRampStatusFilter<$PrismaModel>
     _max?: NestedEnumonRampStatusFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type onRampTransactionsCreateNestedManyWithoutUserInput = {
@@ -6846,6 +6948,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutReceiverNestedInput = {
     create?: XOR<UserCreateWithoutReceiverInput, UserUncheckedCreateWithoutReceiverInput>
     connectOrCreate?: UserCreateOrConnectWithoutReceiverInput
@@ -6868,14 +6982,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type UserUpdateOneRequiredWithoutBalanceNestedInput = {
     create?: XOR<UserCreateWithoutBalanceInput, UserUncheckedCreateWithoutBalanceInput>
     connectOrCreate?: UserCreateOrConnectWithoutBalanceInput
@@ -6892,10 +6998,6 @@ export namespace Prisma {
 
   export type EnumonRampStatusFieldUpdateOperationsInput = {
     set?: $Enums.onRampStatus
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type UserUpdateOneRequiredWithoutOnramptransactionsNestedInput = {
@@ -7007,6 +7109,31 @@ export namespace Prisma {
     _max?: NestedEnumAuthTypeFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -7041,17 +7168,6 @@ export namespace Prisma {
     not?: NestedEnumonRampStatusFilter<$PrismaModel> | $Enums.onRampStatus
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedEnumonRampStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.onRampStatus | EnumonRampStatusFieldRefInput<$PrismaModel>
     in?: $Enums.onRampStatus[] | ListEnumonRampStatusFieldRefInput<$PrismaModel>
@@ -7060,20 +7176,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumonRampStatusFilter<$PrismaModel>
     _max?: NestedEnumonRampStatusFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type onRampTransactionsCreateWithoutUserInput = {
@@ -7105,13 +7207,13 @@ export namespace Prisma {
 
   export type BalanceCreateWithoutUserInput = {
     amount: number
-    locked: number
+    locked?: number
   }
 
   export type BalanceUncheckedCreateWithoutUserInput = {
     id?: number
     amount: number
-    locked: number
+    locked?: number
   }
 
   export type BalanceCreateOrConnectWithoutUserInput = {
@@ -7126,16 +7228,20 @@ export namespace Prisma {
 
   export type P2PTransferHistoryCreateWithoutSenderInput = {
     id?: string
+    timestamp?: Date | string
     receiverName: string
     senderName: string
+    amount: number
     receiver: UserCreateNestedOneWithoutReceiverInput
   }
 
   export type P2PTransferHistoryUncheckedCreateWithoutSenderInput = {
     id?: string
+    timestamp?: Date | string
     receiverID: string
     receiverName: string
     senderName: string
+    amount: number
   }
 
   export type P2PTransferHistoryCreateOrConnectWithoutSenderInput = {
@@ -7150,16 +7256,20 @@ export namespace Prisma {
 
   export type P2PTransferHistoryCreateWithoutReceiverInput = {
     id?: string
+    timestamp?: Date | string
     receiverName: string
     senderName: string
+    amount: number
     sender: UserCreateNestedOneWithoutSenderInput
   }
 
   export type P2PTransferHistoryUncheckedCreateWithoutReceiverInput = {
     id?: string
+    timestamp?: Date | string
     receiverName: string
     senderID: string
     senderName: string
+    amount: number
   }
 
   export type P2PTransferHistoryCreateOrConnectWithoutReceiverInput = {
@@ -7248,10 +7358,12 @@ export namespace Prisma {
     OR?: P2PTransferHistoryScalarWhereInput[]
     NOT?: P2PTransferHistoryScalarWhereInput | P2PTransferHistoryScalarWhereInput[]
     id?: StringFilter<"P2PTransferHistory"> | string
+    timestamp?: DateTimeFilter<"P2PTransferHistory"> | Date | string
     receiverID?: StringFilter<"P2PTransferHistory"> | string
     receiverName?: StringFilter<"P2PTransferHistory"> | string
     senderID?: StringFilter<"P2PTransferHistory"> | string
     senderName?: StringFilter<"P2PTransferHistory"> | string
+    amount?: IntFilter<"P2PTransferHistory"> | number
   }
 
   export type P2PTransferHistoryUpsertWithWhereUniqueWithoutReceiverInput = {
@@ -7538,21 +7650,25 @@ export namespace Prisma {
   export type BalanceCreateManyUserInput = {
     id?: number
     amount: number
-    locked: number
+    locked?: number
   }
 
   export type P2PTransferHistoryCreateManySenderInput = {
     id?: string
+    timestamp?: Date | string
     receiverID: string
     receiverName: string
     senderName: string
+    amount: number
   }
 
   export type P2PTransferHistoryCreateManyReceiverInput = {
     id?: string
+    timestamp?: Date | string
     receiverName: string
     senderID: string
     senderName: string
+    amount: number
   }
 
   export type onRampTransactionsUpdateWithoutUserInput = {
@@ -7600,44 +7716,56 @@ export namespace Prisma {
 
   export type P2PTransferHistoryUpdateWithoutSenderInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
     receiver?: UserUpdateOneRequiredWithoutReceiverNestedInput
   }
 
   export type P2PTransferHistoryUncheckedUpdateWithoutSenderInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverID?: StringFieldUpdateOperationsInput | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type P2PTransferHistoryUncheckedUpdateManyWithoutSenderInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverID?: StringFieldUpdateOperationsInput | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type P2PTransferHistoryUpdateWithoutReceiverInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
     sender?: UserUpdateOneRequiredWithoutSenderNestedInput
   }
 
   export type P2PTransferHistoryUncheckedUpdateWithoutReceiverInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderID?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
   export type P2PTransferHistoryUncheckedUpdateManyWithoutReceiverInput = {
     id?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     receiverName?: StringFieldUpdateOperationsInput | string
     senderID?: StringFieldUpdateOperationsInput | string
     senderName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
   }
 
 

@@ -19,9 +19,9 @@ export const Balance = ()=> {
                 <SubHeading title="Balance" className="text-indigo-700" />
             </div>
             <div className="space-y-3">
-                <TableItems title="Unlocked Balance" value={`${balance.amount ? (balance.amount - balance.locked) + " INR" : "Fetching"}`} valueColor="text-emerald-600" />   
-                <TableItems title="Total Locked Balance" value={`${balance.locked ? balance.locked + " INR": "Fetching"}`} valueColor="text-amber-600" />
-                <TableItems title="Total Balance" value={`${balance.amount ? balance.amount + " INR" : "Fetching"}`} valueColor="text-blue-700" />
+                <TableItems title="Unlocked Balance" value={`${!balance ? "₹0" : balance.amount ? "₹" + (balance.amount - balance.locked)/100 : "Fetching"}`} valueColor="text-emerald-600" />   
+                <TableItems title="Total Locked Balance" value={`${!balance ? "₹0" :+ balance.locked ? "₹"+balance.locked/100: "Fetching"}`} valueColor="text-amber-600" />
+                <TableItems title="Total Balance" value={`${!balance ? "₹0" :+ balance.amount ? "₹"+balance.amount/100 : "Fetching"}`} valueColor="text-blue-700" />
             </div>
         </div>
     )

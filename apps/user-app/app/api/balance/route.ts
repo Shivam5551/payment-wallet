@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
         const userID = await getServerSession(NEXT_AUTH);
         const balance = await prisma?.balance.findFirst({
             where: {
-                userId: userID.user.id
+                userId: userID.user.id 
             }
         });
         return NextResponse.json({

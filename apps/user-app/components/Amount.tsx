@@ -21,10 +21,11 @@ const SUPPORTED_BANKS = [{
 export const Amount = () => {
     const [amount, setAmount] = useState('')
     const [redirectUrl, setRedirectUrl] = useState<string | undefined>('');
-    
+    const [submitting, setSubmitting] = useState(false);
 
     async function AddMoneyHandler() {
         if(amount && redirectUrl) {
+            setSubmitting(true);
             const provider = SUPPORTED_BANKS.find(e => e.redirectUrl === redirectUrl)?.name || "";  
             const res = await TransactionsAction({
                 provider: provider,
@@ -33,24 +34,27 @@ export const Amount = () => {
             if(res?.message && res.success) {
                 console.log(res.message);
                 toast(res.message, {
-                    autoClose: 500
+                    autoClose: 3000
                 });
             }
             else{
-                toast("Error", {
+                toast(res.message || "Error", {
                     theme: "colored",
                     type: "error",
-                    autoClose: 300,
+                    autoClose: 3000,
                     draggable: true
                 })
             }
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            setSubmitting(false);
+            window.location.reload();
         }
     }
 
 
     return (
         <div className="bg-white border border-blue-100  rounded-xl shadow-lg space-y-6 p-10 w-full h-fit">
-            <SubHeading title="Add Money" />
+            <SubHeading title="Add Money" className=""/>
             <div>
                 <MiniHeading name="amount" title="Amount" />
                 <input
@@ -82,8 +86,8 @@ export const Amount = () => {
                 </select>
             </div>
             <div className="flex justify-center items-center">
-                <Button onClickHandler={AddMoneyHandler} className="w-fit px-6 font-semibold text-xl hover:text-indigo-50 cursor-pointer py-2 bg-black text-white transform duration-300 rounded-xl hover:bg-zinc-700">
-                    Add Money
+                <Button onClickHandler={AddMoneyHandler} className="w-fit px-6 font-semibold text-sm sm:text-xl hover:text-indigo-50 cursor-pointer py-2 bg-black text-white transform duration-300 rounded-xl hover:bg-zinc-700">
+                    {submitting ? <div className="rounded-full h-7 w-7 flex  items-center justify-center m-2 border-b-2 border-b-white animate-spin"></div> : "Add Money"}
                 </Button>
             </div>
         </div>
