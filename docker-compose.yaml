@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  postgresql: 
+    image: postgres
+    container_name: postgresqlDB
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=payment_wallet
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  user-app:
+    build:
+      context: ./user-app
+    container_name: user-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - bank-webhook
+      - postgresql
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgresql:5432/payment_wallet
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=your_nextauth_secret_key
+
+  bank-webhook:
+    build:
+      context: ./bank-webhook
+    container_name: bank-webhook
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgresql
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgresql:5432/payment_wallet
+      - PORT=4000
+
+volumes:
+  postgres_data:
