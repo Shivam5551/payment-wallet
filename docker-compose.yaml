@@ -11,10 +11,13 @@ services:
       - POSTGRES_DB=payment_wallet
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+      - user-app-network
 
   user-app:
     build:
-      context: ./user-app
+      context: .
     container_name: user-app
     ports:
       - "3000:3000"
@@ -25,10 +28,13 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@postgresql:5432/payment_wallet
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=your_nextauth_secret_key
+    networks:
+      - backend-network
+      - user-app-network
 
   bank-webhook:
     build:
-      context: ./bank-webhook
+      context: .
     container_name: bank-webhook
     ports:
       - "4000:4000"
@@ -37,6 +43,11 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@postgresql:5432/payment_wallet
       - PORT=4000
+    networks:
+      - backend-network
 
 volumes:
   postgres_data:
+networks:
+  backend-network:
+  user-app-network:
